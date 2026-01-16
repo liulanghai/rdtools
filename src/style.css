@@ -1,0 +1,374 @@
+:root {
+  --primary-color: #4a90e2;
+  --bg-color: #1e1e1e;
+  --text-color: #d4d4d4;
+  --border-color: #333;
+  --input-bg: #252525;
+  --error-color: #f44336;
+  --btn-hover: #357abd;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.container {
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+}
+
+h1 {
+  font-size: 1.2rem;
+  margin: 0;
+  background: linear-gradient(135deg, #60a5fa, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav button {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+nav button.active {
+  color: var(--primary-color);
+  background: rgba(74, 144, 226, 0.1);
+}
+
+.tool-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+textarea,
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-color);
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+}
+
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+#json-input.invalid-input {
+  border-color: var(--error-color);
+  box-shadow: 0 0 5px rgba(244, 67, 54, 0.3);
+}
+
+.error-message {
+  color: var(--error-color);
+  font-size: 12px;
+  margin-top: 4px;
+  min-height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.error-message:empty {
+  display: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  /* Keep it fixed to the screen even on scroll */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  /* Darker backdrop for focus */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  /* Extremely high z-index to stay on top */
+}
+
+.modal-content {
+  background: #252525;
+  border: 1px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 24px;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.modal-content textarea {
+  flex-grow: 1;
+  min-height: 400px;
+  background: #1a1a1a;
+  border: 1px solid #444;
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: var(--btn-hover);
+}
+
+.input-group,
+.output-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.form-group label {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* JSON Editor vertical layout */
+.json-split-container {
+  display: flex;
+  flex-direction: column;
+  /* Changed from row */
+  gap: 16px;
+  min-height: calc(100vh - 120px);
+  /* Fill most of the viewport height */
+}
+
+.json-left-panel,
+.json-right-panel {
+  flex: none;
+  /* Don't grow equally since they are stacked */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: visible;
+  /* Adjust for stacked interaction */
+}
+
+.json-left-panel {
+  height: 250px;
+  /* Slightly reduced to give more room to tree view */
+}
+
+.json-right-panel {
+  flex-grow: 1;
+  /* Tree view takes remaining space */
+  min-height: 500px;
+}
+
+.json-tree-view {
+  flex-grow: 1;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 12px;
+  background: #252525;
+  overflow-y: auto;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 13px;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* JSON Tree specific */
+.tree-node {
+  margin-left: 16px;
+}
+
+.tree-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  white-space: nowrap;
+  padding: 2px 0;
+}
+
+.tree-toggle {
+  cursor: pointer;
+  color: #888;
+  width: 12px;
+  display: inline-block;
+  user-select: none;
+}
+
+.tree-key {
+  color: #9cdcfe;
+}
+
+.tree-colon {
+  color: #d4d4d4;
+}
+
+.tree-value {
+  color: #ce9178;
+  cursor: pointer;
+  word-break: break-all;
+  white-space: normal;
+}
+
+.tree-value.type-number {
+  color: #b5cea8;
+}
+
+.tree-value.type-boolean {
+  color: #569cd6;
+}
+
+.tree-value.type-null {
+  color: #569cd6;
+}
+
+.search-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #252525;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  margin-bottom: 4px;
+}
+
+#json-search {
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+  padding: 2px;
+  outline: none;
+  font-size: 13px;
+  color: var(--text-color);
+}
+
+.search-count {
+  font-size: 11px;
+  color: #888;
+  min-width: 50px;
+  text-align: right;
+}
+
+mark.highlight {
+  background: #ffeb3b;
+  /* Bright yellow */
+  color: #000;
+  /* High contrast black text */
+  border-radius: 2px;
+  padding: 0 2px;
+  font-weight: bold;
+}
+
+.tree-row.search-match {
+  background: rgba(255, 235, 59, 0.15);
+  /* Subtle yellow tint for the whole row */
+}
+
+.tree-value-input {
+  background: var(--input-bg);
+  border: 1px solid var(--primary-color);
+  color: var(--text-color);
+  padding: 1px 4px;
+  font-family: inherit;
+  font-size: inherit;
+  width: auto;
+  min-width: 50px;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 100000;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+#json-diff-content {
+  background: #1a1a1a;
+  padding: 12px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  font-size: 12px;
+  color: #d4d4d4;
+  border-left: 4px solid var(--primary-color);
+  margin-top: 16px;
+}
