@@ -1,11 +1,13 @@
 import * as base64 from './modules/base64.js';
 import * as auth from './modules/auth.js';
+import * as timestamp from './modules/timestamp.js';
 import { setupJsonEditor } from './modules/jsonEditor.js';
 
 // Tab switching logic
 const tabs = {
     'tab-json': 'section-json',
     'tab-base64': 'section-base64',
+    'tab-timestamp': 'section-timestamp',
     'tab-auth': 'section-auth'
 };
 
@@ -35,6 +37,32 @@ document.getElementById('btn-base64-encode').addEventListener('click', () => {
 
 document.getElementById('btn-base64-decode').addEventListener('click', () => {
     base64Output.value = base64.decode(base64Input.value);
+});
+
+// Timestamp logic
+const tsInput = document.getElementById('ts-input');
+const dateInput = document.getElementById('date-input');
+
+document.getElementById('btn-ts-to-date').addEventListener('click', () => {
+    dateInput.value = timestamp.toDate(tsInput.value);
+});
+
+document.getElementById('btn-date-to-ts').addEventListener('click', () => {
+    tsInput.value = timestamp.toTimestamp(dateInput.value);
+});
+
+document.getElementById('btn-date-to-tsms').addEventListener('click', () => {
+    tsInput.value = timestamp.toTimestampMs(dateInput.value);
+});
+
+document.getElementById('btn-ts-now').addEventListener('click', () => {
+    tsInput.value = Math.floor(Date.now() / 1000).toString();
+    dateInput.value = new Date().toLocaleString();
+});
+
+document.getElementById('btn-ts-clear').addEventListener('click', () => {
+    tsInput.value = '';
+    dateInput.value = '';
 });
 
 // Auth Gen logic

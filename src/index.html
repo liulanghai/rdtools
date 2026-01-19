@@ -15,6 +15,7 @@
             <nav>
                 <button id="tab-json" class="active">JSON Editor</button>
                 <button id="tab-base64">Base64</button>
+                <button id="tab-timestamp">Timestamp</button>
                 <button id="tab-auth">Auth Gen</button>
             </nav>
         </header>
@@ -52,6 +53,29 @@
                 </div>
                 <div class="output-group">
                     <textarea id="base64-output" readonly placeholder="Result..."></textarea>
+                </div>
+            </section>
+
+            <!-- Timestamp Section -->
+            <section id="section-timestamp" class="tool-section hidden">
+                <div class="input-group">
+                    <label>Unix Timestamp (seconds or ms)</label>
+                    <div class="actions">
+                        <input type="text" id="ts-input" placeholder="e.g. 1705645067">
+                        <button id="btn-ts-to-date">To Date →</button>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>Date String</label>
+                    <div class="actions">
+                        <input type="text" id="date-input" placeholder="e.g. 2024-01-19 14:17:47">
+                        <button id="btn-date-to-ts">To Timestamp (s) ←</button>
+                        <button id="btn-date-to-tsms">To Timestamp (ms) ←</button>
+                    </div>
+                </div>
+                <div class="panel-actions">
+                    <button id="btn-ts-now">Current Time</button>
+                    <button id="btn-ts-clear">Clear</button>
                 </div>
             </section>
 
