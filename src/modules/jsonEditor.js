@@ -18,16 +18,35 @@ export function setupJsonEditor() {
 
     // BigInt sensitive helpers
     const BIGINT_MARKER = '___BIGINT___';
+    const BIGINT_SUFFIX = '@@@';
 
     function bigIntSafeParse(str) {
-        const wrapped = str.replace(/(:\s*|\[\s*|,|,\s*)(-?\d{16,})(\s*,|\s*\]|\s*\})/g, (match, prefix, num, suffix) => {
-            return `${prefix}"${BIGINT_MARKER}${num}"${suffix}`;
+        if (!str) return null;
+
+        // 1. Stash all string literals to prevent modification inside them
+        const strings = [];
+        const STASH_PREFIX = `__JSON_STASH_${Math.random().toString(36).slice(2)}__`;
+
+        const skeleton = str.replace(/"(?:\\.|[^\\"])*"/g, (match) => {
+            strings.push(match);
+            return `${STASH_PREFIX}${strings.length - 1}${STASH_PREFIX}`;
         });
 
-        const data = JSON.parse(wrapped);
+        // 2. Wrap long numbers (16+ digits) in markers so they become strings
+        const wrappedSkeleton = skeleton.replace(/(-?\d{16,})/g, `"${BIGINT_MARKER}$1${BIGINT_SUFFIX}"`);
+
+        // 3. Restore string literals
+        const restored = wrappedSkeleton.replace(new RegExp(`${STASH_PREFIX}(\\d+)${STASH_PREFIX}`, 'g'), (match, index) => {
+            return strings[parseInt(index)];
+        });
+
+        // 4. Parse the protected JSON
+        const data = JSON.parse(restored);
+
+        // 5. Recursively convert marked strings into BigInt-like objects
         const process = (obj) => {
-            if (typeof obj === 'string' && obj.startsWith(BIGINT_MARKER)) {
-                return { [BIGINT_MARKER]: obj.replace(BIGINT_MARKER, '') };
+            if (typeof obj === 'string' && obj.startsWith(BIGINT_MARKER) && obj.endsWith(BIGINT_SUFFIX)) {
+                return { [BIGINT_MARKER]: obj.slice(BIGINT_MARKER.length, -BIGINT_SUFFIX.length) };
             }
             if (obj && typeof obj === 'object') {
                 for (let k in obj) {
@@ -40,13 +59,17 @@ export function setupJsonEditor() {
     }
 
     function bigIntSafeStringify(obj, space) {
+        // Mark the special BigInt objects for stringification
         const json = JSON.stringify(obj, (key, value) => {
             if (value && value[BIGINT_MARKER]) {
-                return `${BIGINT_MARKER}${value[BIGINT_MARKER]}@@@`;
+                return `${BIGINT_MARKER}${value[BIGINT_MARKER]}${BIGINT_SUFFIX}`;
             }
             return value;
         }, space);
-        return json.replace(new RegExp(`"${BIGINT_MARKER}(\\d+)@@@"`, 'g'), '$1');
+
+        // Remove quotes around the marked BigInt values to restore them as raw numbers in JSON
+        // Regex: "___BIGINT___(\d+)@@@" -> $1
+        return json.replace(new RegExp(`"${BIGINT_MARKER}(\\d+)${BIGINT_SUFFIX}"`, 'g'), '$1');
     }
 
     // Toast helper
