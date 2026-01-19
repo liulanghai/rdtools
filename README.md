@@ -27,7 +27,7 @@ RdTools 是一款专为开发者打造的高效 Chrome 扩展程序。它集成�
 *   **双向转换**：支持文本与 Base64 字符串的快速互转。
 *   **Unicode 友好**：原生支持中文字符、表情符号等 Unicode 内容，杜绝乱码。
 
-### 3. Authorization 生成器
+### 4. Authorization 生成器
 *   **Basic Auth 快速生成**：输入用户名和密码，一键生成标准 `Basic` 认证字符串，直连接口测试。
 
 ## 浏览器集成体验

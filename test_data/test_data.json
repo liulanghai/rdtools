@@ -1,0 +1,41 @@
+{
+    "project": "RdTools Integration Test",
+    "version": "1.0.0",
+    "bigIntTest": {
+        "snowflakeId": 7114968410357858123,
+        "transactionId": 9223372036854775807,
+        "negativeBigInt": -8123456789012345678,
+        "arrayWithBigInts": [
+            7114968410357858001,
+            7114968410357858002,
+            7114968410357858003
+        ]
+    },
+    "nestedJsonTest": {
+        "simple_config": "{\"enabled\": true, \"retry\": 3}",
+        "complex_nested": "{\"user\":{\"id\":7114968410357858123,\"name\":\"DeepSeek\",\"tags\":[\"AI\",\"Developer\"]},\"metadata\":\"{\\\"source\\\":\\\"api\\\",\\\"timestamp\\\":1705645067}\"}",
+        "escaped_chars": "Line 1\\nLine 2 with \\\"quotes\\\" and \\\\ backslash"
+    },
+    "typePreservationTest": {
+        "numericString": "12345",
+        "actualNumber": 12345,
+        "booleanValue": true,
+        "nullValue": null,
+        "emptyArray": [],
+        "emptyObject": {}
+    },
+    "longStringTest": {
+        "description": "This is a very long string designed to trigger the modal editor in RdTools. It contains enough characters to exceed the 100-character threshold. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+        "rawHtml": "<div class=\"container\"><p>Testing HTML tags inside JSON strings</p></div>"
+    },
+    "searchTest": {
+        "commonKey": "Value 1",
+        "deeply": {
+            "nested": {
+                "target": "Find me in the tree!",
+                "commonKey": "Value 2"
+            }
+        }
+    },
+    "specialChars": "System path: C:\\\\Users\\\\Admin\\\\Desktop\\nNew Line: \\nTab: \\tUnicode: \\u2713"
+}
