@@ -39,6 +39,7 @@ h1 {
   margin: 0;
   background: linear-gradient(135deg, #60a5fa, #a855f7);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -56,6 +57,81 @@ nav button {
 nav button.active {
   color: var(--primary-color);
   background: rgba(74, 144, 226, 0.1);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-button {
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.icon-button:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-color);
+}
+
+.modal-hint {
+  font-size: 13px;
+  color: #888;
+  margin: -8px 0 16px 0;
+}
+
+.reorder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reorder-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #2a2a2a;
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.2s, background-color 0.2s, border-color 0.2s;
+}
+
+.reorder-item:active {
+  cursor: grabbing;
+}
+
+.reorder-item.dragging {
+  opacity: 0.5;
+  background: #333;
+  border-color: var(--primary-color);
+  transform: scale(0.98);
+}
+
+.reorder-item.drag-over {
+  border-top: 2px solid var(--primary-color);
+}
+
+.drag-handle {
+  color: #666;
+  display: flex;
+  align-items: center;
+}
+
+.reorder-item-label {
+  font-weight: 500;
+  font-size: 14px;
+  flex-grow: 1;
 }
 
 .tool-section {
